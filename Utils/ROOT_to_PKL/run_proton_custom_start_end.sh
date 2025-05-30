@@ -25,7 +25,7 @@ run_screen_batch() {
     screen -dmS $SCREEN_NAME bash -c "
     for i in \$(seq $START_INDEX $END_INDEX); do
         echo 'Processing index:' \$i
-        python MT_1_proton_50.py \$i
+        python MT_1_proton_1.py \$i
     done
     echo 'Screen $SCREEN_NAME finished'
     exec bash"
