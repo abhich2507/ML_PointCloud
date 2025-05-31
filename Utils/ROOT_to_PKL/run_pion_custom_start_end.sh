@@ -11,7 +11,7 @@ fi
 START_TOTAL=$1
 END_TOTAL=$2
 
-FILES_PER_SCREEN=1  # Number of files each screen will process
+FILES_PER_SCREEN=5  # Number of files each screen will process
 
 # Function to run batch in screen session
 run_screen_batch() {
