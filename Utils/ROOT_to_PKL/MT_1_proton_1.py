@@ -73,15 +73,15 @@ def process_event(event):
         "total_energy": cell_energy_dict[key],
         "mean_time": cell_time_dict[key] / (cell_energy_dict[key]) # Energy weighted mean time
     } for key in cell_energy_dict.keys() if cell_energy_dict[key] > 0])
-    print(f"events: {df_event}")
+    
     return df_event
 
 df_events = []
 
 def process_events_in_range(index):
     t = int(index)
-    file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/OneDrive - University of Tennessee/Proton_25GeV_Col/result_proton_{t}.root")
-    # file= ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/Proton_100Gev_Col/result_proton_{t}.root")
+    # file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/OneDrive - University of Tennessee/Proton_50GeV_Col/result_proton_{t}.root")
+    file= ROOT.TFile.Open(f"/mnt/d/Proton_50Gev_Col/result_proton_{t}.root")
     tree = file.Get("outputTree")
     total_entries = tree.GetEntries()
     print(f"Total Entries: {total_entries}")
@@ -91,7 +91,7 @@ def process_events_in_range(index):
         df_event = process_event(event)
         df_events.append(df_event)
 
-    with open(f"/mnt/c/Users/hnayak/Documents/25GeV/PKL_proton_25GeV_1/proton{t}.pkl", "wb") as f:
+    with open(f"/mnt/c/Users/hnayak/Documents/50GeV/PKL_proton_50GeV_1/proton{t}.pkl", "wb") as f:
         pickle.dump(df_events, f)
 
     print(f"proton{t}.pkl created")
