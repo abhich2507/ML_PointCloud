@@ -101,6 +101,7 @@ class DeepSet(nn.Module):
 
         x = x.mean(dim=1)  # Average over points
         out = x  # Remove log_softmax if not needed
+      
         return out
 
 
