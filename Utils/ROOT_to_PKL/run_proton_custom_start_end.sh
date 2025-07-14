@@ -9,7 +9,7 @@ source /home/alma1/anaconda3/etc/profile.d/conda.sh
 
 # Deactivate any active environment and activate root_env
 # conda deactivate 2>/dev/null || true
-conda activate rootpy_39
+conda activate root_py39
 
 if [ "$#" -ne 5 ]; then
     echo "Usage: $0 <start_index> <end_index> <x> <y> <z>"
@@ -45,7 +45,7 @@ run_screen_batch() {
     for i in \$(seq $START_INDEX $END_INDEX); do
         echo 'Processing index:' \$i
         echo 'segmentation chosen: $X_SEG_PARAM $Y_SEG_PARAM $Z_SEG_PARAM'
-        python MT_1_pion_XX.py \$i $X_SEG_PARAM $Y_SEG_PARAM $Z_SEG_PARAM
+        python MT_1_proton_XX.py \$i $X_SEG_PARAM $Y_SEG_PARAM $Z_SEG_PARAM
     done
     echo 'Screen $SCREEN_NAME finished'
     exec bash"

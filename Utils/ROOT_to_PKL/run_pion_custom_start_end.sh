@@ -40,7 +40,7 @@ run_screen_batch() {
     screen -dmS $SCREEN_NAME bash -c "
     # Initialize conda and activate root_env in the screen session
     source /mnt/miniconda3/etc/profile.d/conda.sh
-    conda activate root_env
+    conda activate root_py39
     
     for i in \$(seq $START_INDEX $END_INDEX); do
         echo 'Processing index:' \$i
