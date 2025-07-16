@@ -41,7 +41,7 @@ class DeepSetLayer(nn.Module):
 
     def forward(self, x : torch.Tensor) -> torch.Tensor :
        
-        
+        print("Set:", x, "shape: ", x.shape)
         if(self.pool == 'mean') : 
             x = self.Gamma(x) + self.Lambda(x - x.mean(dim=1, keepdim=True)) # -- the average is over the points -- #
         elif(self.pool == 'mean2') : 
@@ -101,7 +101,6 @@ class DeepSet(nn.Module):
 
         x = x.mean(dim=1)  # Average over points
         out = x  # Remove log_softmax if not needed
-      
         return out
 
 
