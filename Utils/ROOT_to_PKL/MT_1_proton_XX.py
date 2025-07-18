@@ -88,7 +88,7 @@ df_events = []
 
 def process_events_in_range(index):
     t = int(index)
-    file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton_10Gev_Col/result_proton_{t}.root")
+    file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/Proton_10Gev_Col/result_proton_{t}.root")
     # file= ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/Proton_100Gev_Col/result_proton_{t}.root")
     tree = file.Get("outputTree")
     total_entries = tree.GetEntries()
