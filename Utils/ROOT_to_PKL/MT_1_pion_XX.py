@@ -7,15 +7,20 @@ import time
 from tqdm import tqdm
 import os
 import sys
+from pathlib import Path
 # User input start and end index
 x=int(sys.argv[2])
 y=int(sys.argv[3])
 z=int(sys.argv[4])
 print(x,y,z)
+
 from pathlib import Path
 
 dir_path = Path(f"/mnt/c/Users/hnayak/Documents/10GeV/Pion/{x}_{y}_{z}")
+
+
 dir_path.mkdir(parents=True, exist_ok=True)
+
 print(f"Directory created or already exists: {dir_path}")
 
 @jit(nopython=True)
@@ -88,7 +93,7 @@ df_events = []
 
 def process_events_in_range(index):
     t = int(index)
-    file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton_10Gev_Col/result_proton_{t}.root")
+    file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/10GeV/Pion_10Gev_Col/result_pion_{t}.root")
     # file= ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/Proton_100Gev_Col/result_proton_{t}.root")
     tree = file.Get("outputTree")
     total_entries = tree.GetEntries()
@@ -99,10 +104,10 @@ def process_events_in_range(index):
         df_event = process_event(event)
         df_events.append(df_event)
 
-    with open(f"/mnt/c/Users/hnayak/Documents/10GeV/PKL_proton_10GeV_25_25_100/proton{t}.pkl", "wb") as f:
+    with open(f"/mnt/c/Users/hnayak/Documents/10GeV/Pion/{x}_{y}_{z}/pion{t}.pkl", "wb") as f:
         pickle.dump(df_events, f)
 
-    print(f"proton{t}.pkl created")
+    print(f"pion{t}.pkl created")
     
   
 
