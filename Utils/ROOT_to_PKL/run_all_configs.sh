@@ -2,6 +2,7 @@
 
 # Define list of x y z combinations
 configs=(
+  "25 25 100"
   "25 25 200"
   "50 50 25"
   "50 50 50"
@@ -16,8 +17,8 @@ for config in "${configs[@]}"; do
   echo "Time: $(date)"
   echo "------------------------------"
   
-  ./run_pion_custom_start_end.sh 1 100 $config
-  wait
+  #./run_pion_custom_start_end.sh 1 100 $config
+  #wait
 
   ./run_proton_custom_start_end.sh 1 100 $config
   wait
@@ -29,5 +30,5 @@ for config in "${configs[@]}"; do
 
   # Sleep for 2 hours (7200 seconds) before the next config
   echo "Sleeping for 45 minutes before next iteration..."
-  sleep 2700
+  sleep 1800
 done

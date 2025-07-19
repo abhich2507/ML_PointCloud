@@ -14,7 +14,7 @@ z=int(sys.argv[4])
 print(x,y,z)
 from pathlib import Path
 
-dir_path = Path(f"/mnt/c/Users/hnayak/Documents/10GeV/Pion/{x}_{y}_{z}")
+dir_path = Path(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/{x}_{y}_{z}")
 dir_path.mkdir(parents=True, exist_ok=True)
 print(f"Directory created or already exists: {dir_path}")
 
@@ -99,7 +99,7 @@ def process_events_in_range(index):
         df_event = process_event(event)
         df_events.append(df_event)
 
-    with open(f"/mnt/c/Users/hnayak/Documents/10GeV/PKL_proton_10GeV_25_25_100/proton{t}.pkl", "wb") as f:
+    with open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/{x}_{y}_{z}/proton{t}.pkl", "wb") as f:
         pickle.dump(df_events, f)
 
     print(f"proton{t}.pkl created")
