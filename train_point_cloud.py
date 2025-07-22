@@ -190,7 +190,7 @@ def train_model(model, train_loader, val_loader, num_epochs=2, learning_rate=5e-
     print("Training complete!")
 
 
-def evaluate_model(model, data_loader, criterion, device, name="model", return_accuracy=False):
+def evaluate_model(model, data_loader, criterion, device, name="default", return_accuracy=False):
     bold_font = FontProperties(weight='bold', size=14)
     
     model.eval()
@@ -316,9 +316,10 @@ def main():
     pion_dir = f"/mnt/c/Users/hnayak/Documents/{energy}GeV/Pion/small_{granularity}"
     proton_dir = f"/mnt/c/Users/hnayak/Documents/{energy}GeV/Proton/small_{granularity}"
     
-    name=proton_dir.replace(f"/mnt/c/Users/hnayak/Documents/{energy}GeV/Proton/small_","")
+    name=f"{energy}GeV_"+proton_dir.replace(f"/mnt/c/Users/hnayak/Documents/{energy}GeV/Proton/small_","")
+    
     # Create name for model and logs
-
+    
     print(f"Training configuration: {name}")
     
     # Check if directories exist
@@ -370,9 +371,10 @@ def main():
     log_path = f"./Logs/log_summary_Z_{name}.csv"
     
     # Train the model
+    print(name)
     print("Starting training...")
-    train_model(model, train_loader, val_loader, num_epochs=args.epochs, 
-                learning_rate=args.lr, device=device, save_path=save_path, log_path=log_path)
+    # train_model(model, train_loader, val_loader, num_epochs=args.epochs, 
+    #             learning_rate=args.lr, device=device, save_path=save_path, log_path=log_path)
     
     # Load best model and evaluate
     print("Loading best model for evaluation...")
