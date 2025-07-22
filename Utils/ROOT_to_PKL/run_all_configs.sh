@@ -2,12 +2,8 @@
 
 # Define list of x y z combinations
 configs=(
-  "25 25 100"
-  "25 25 200"
-  "50 50 25"
-  "50 50 50"
-  "50 50 100"
-  "50 50 200"
+  "100 100 100"
+  "100 100 50"
 )
 
 # Loop through each config
@@ -17,8 +13,8 @@ for config in "${configs[@]}"; do
   echo "Time: $(date)"
   echo "------------------------------"
   
-  #./run_pion_custom_start_end.sh 1 100 $config
-  #wait
+  ./run_pion_custom_start_end.sh 1 100 $config
+  wait
 
   ./run_proton_custom_start_end.sh 1 100 $config
   wait
