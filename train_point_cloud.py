@@ -35,6 +35,8 @@ from matplotlib.font_manager import FontProperties
 # Import DeepSet model
 from deepset import *
 
+
+
 class StreamingHcaDataset(Dataset): 
     def __init__(self, proton_dir, pion_dir, features=["x", "y", "z", "total_energy","mean_time"]):
         super().__init__()
@@ -311,11 +313,12 @@ def main():
     granularity = args.granularity
     
     # Create data paths
-    pion_dir = f"/mnt/c/Users/hnayak/Documents/{energy}GeV/small_PKL_pion_{energy}GeV_{granularity}"
-    proton_dir = f"/mnt/c/Users/hnayak/Documents/{energy}GeV/small_PKL_proton_{energy}GeV_{granularity}"
+    pion_dir = f"/mnt/c/Users/hnayak/Documents/{energy}GeV/Pion/small_{granularity}"
+    proton_dir = f"/mnt/c/Users/hnayak/Documents/{energy}GeV/Proton/small_{granularity}"
     
+    name=proton_dir.replace(f"/mnt/c/Users/hnayak/Documents/{energy}GeV/Proton/small_","")
     # Create name for model and logs
-    name = proton_dir.replace(f"/mnt/c/Users/hnayak/Documents/{energy}GeV/small_PKL_proton_","")
+
     print(f"Training configuration: {name}")
     
     # Check if directories exist
