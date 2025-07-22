@@ -103,8 +103,6 @@ def process_events_in_range(index):
         pickle.dump(df_events, f)
 
     print(f"proton{t}.pkl created")
-    
-  
 
 
 index = sys.argv[1]
