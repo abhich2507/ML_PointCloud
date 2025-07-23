@@ -373,8 +373,8 @@ def main():
     # Train the model
     print(name)
     print("Starting training...")
-    # train_model(model, train_loader, val_loader, num_epochs=args.epochs, 
-    #             learning_rate=args.lr, device=device, save_path=save_path, log_path=log_path)
+    train_model(model, train_loader, val_loader, num_epochs=args.epochs, 
+                learning_rate=args.lr, device=device, save_path=save_path, log_path=log_path)
     
     # Load best model and evaluate
     print("Loading best model for evaluation...")
