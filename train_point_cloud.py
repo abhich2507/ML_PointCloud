@@ -38,7 +38,7 @@ from deepset import *
 
 
 class StreamingHcaDataset(Dataset): 
-    def __init__(self, proton_dir, pion_dir, features=["x", "y", "z", "total_energy","mean_time"]):
+    def __init__(self, proton_dir, pion_dir, features=["x", "y", "z"]):
         super().__init__()
         
         self.proton_files = sorted([os.path.join(proton_dir, f) for f in os.listdir(proton_dir) if f.endswith(".pkl")])
@@ -337,7 +337,7 @@ def main():
     os.makedirs("./Scores", exist_ok=True)
     
     # Initialize model
-    MODEL = DeepSet(in_features=5, feats=[80,120,70,50,8], n_class=2, pool="mean")
+    MODEL = DeepSet(in_features=3, feats=[80,120,70,50,8], n_class=2, pool="mean")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = MODEL.to(device)
     
