@@ -38,7 +38,7 @@ from deepset import *
 
 
 class StreamingHcaDataset(Dataset): 
-    def __init__(self, proton_dir, pion_dir, features=["x", "y", "z", "total_energy","mean_time"]):
+    def __init__(self, proton_dir, pion_dir, features=["x", "y", "z"]):
         super().__init__()
         
         self.proton_files = sorted([os.path.join(proton_dir, f) for f in os.listdir(proton_dir) if f.endswith(".pkl")])
@@ -108,7 +108,7 @@ def test_model(model, test_loader, criterion=None, device=None):
             labels = batch["label"].to(device)  # Labels
             batch_size, seq_len, feat_dim = parts.shape
             parts = parts.cpu().numpy().reshape(-1, feat_dim)
-            qt = QuantileTransformer(output_distribution='normal', random_state=42)
+            qt = QuantileTransformer(n_quantiles=len(labels), output_distribution='normal', random_state=42)
             parts = qt.fit_transform(parts)
             parts = torch.tensor(parts).reshape(batch_size, seq_len, feat_dim).to(device)
 
@@ -149,11 +149,12 @@ def train_model(model, train_loader, val_loader, num_epochs=2, learning_rate=5e-
             parts = batch["part"].to(device)
             batch_size, seq_len, feat_dim = parts.shape
             parts = parts.cpu().numpy().reshape(-1, feat_dim)
-            qt = QuantileTransformer(output_distribution='normal', random_state=42)
+            labels = batch["label"].to(device)
+            qt = QuantileTransformer(n_quantiles=len(labels), output_distribution='normal', random_state=42)
             parts = qt.fit_transform(parts)
             parts = torch.tensor(parts).reshape(batch_size, seq_len, feat_dim).float().to(device)
 
-            labels = batch["label"].to(device)
+            
 
             optimizer.zero_grad()
             outputs = model(parts)
@@ -208,12 +209,13 @@ def evaluate_model(model, data_loader, criterion, device, name="default", return
             parts = batch["part"].to(device)
             batch_size, seq_len, feat_dim = parts.shape
             parts_np = parts.cpu().numpy().reshape(-1, feat_dim)
+            labels = batch["label"].to(device)
 
-            qt = QuantileTransformer(output_distribution='normal', random_state=42)
+            qt = QuantileTransformer(n_quantiles=len(labels), output_distribution='normal', random_state=42) #WARNING: n_quantiles = 32 only for 1_1_1 case.
             parts_np = qt.fit_transform(parts_np)
             parts = torch.tensor(parts_np).reshape(batch_size, seq_len, feat_dim).to(device)
 
-            labels = batch["label"].to(device)
+           
             outputs = model(parts)
             preds = F.softmax(outputs, dim=1)
 
@@ -337,7 +339,7 @@ def main():
     os.makedirs("./Scores", exist_ok=True)
     
     # Initialize model
-    MODEL = DeepSet(in_features=5, feats=[80,120,70,50,8], n_class=2, pool="mean")
+    MODEL = DeepSet(in_features=3, feats=[80,120,70,50,8], n_class=2, pool="mean")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = MODEL.to(device)
     
@@ -378,7 +380,7 @@ def main():
     
     # Load best model and evaluate
     print("Loading best model for evaluation...")
-    model_test = DeepSet(in_features=5, feats=[80,120,70,50,8], n_class=2, pool="mean")
+    model_test = DeepSet(in_features=3, feats=[80,120,70,50,8], n_class=2, pool="mean")
     model_test.load_state_dict(torch.load(save_path, weights_only=True))
     model_test.to(device)
     
