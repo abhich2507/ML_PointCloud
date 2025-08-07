@@ -5,11 +5,12 @@
 
 # Initialize conda for bash shell
 echo "Initializing conda and activating root_env..."
-source /home/alma1/anaconda3/etc/profile.d/conda.sh
+source /mnt/miniconda3/etc/profile.d/conda.sh
 
 # Deactivate any active environment and activate root_env
-# conda deactivate 2>/dev/null || true
-conda activate root_py39
+conda deactivate 2>/dev/null || true # for alma workstation
+#conda activate root_py39 # for anydesk workstation
+conda activate root_env # for alma workstation
 
 if [ "$#" -ne 5 ]; then
     echo "Usage: $0 <start_index> <end_index> <x> <y> <z>"
@@ -40,7 +41,9 @@ run_screen_batch() {
     screen -dmS $SCREEN_NAME bash -c "
     # Initialize conda and activate root_env in the screen session
     source /mnt/miniconda3/etc/profile.d/conda.sh
-    conda activate root_py39
+    #conda activate root_py39 # for anydesk workstation
+    conda deactivate 2>/dev/null || true # for alma workstation
+    conda activate root_env # for alma workstation
     
     for i in \$(seq $START_INDEX $END_INDEX); do
         echo 'Processing index:' \$i

@@ -14,7 +14,8 @@ z=int(sys.argv[4])
 print(x,y,z)
 from pathlib import Path
 
-dir_path = Path(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/{x}_{y}_{z}")
+# dir_path = Path(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/{x}_{y}_{z}") #for anydesk workstation
+dir_path = Path(f"/deepsetsDatasets/dataset/10GeV/Proton/{x}_{y}_{z}") #for alma workstation
 dir_path.mkdir(parents=True, exist_ok=True)
 print(f"Directory created or already exists: {dir_path}")
 
@@ -88,7 +89,8 @@ df_events = []
 
 def process_events_in_range(index):
     t = int(index)
-    file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/Proton_10Gev_Col/result_proton_{t}.root")
+    #file = ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/Proton_10Gev_Col/result_proton_{t}.root") # for anydesk workstation
+    file= ROOT.TFile.Open(f"/home/almalinux/OneDrive/Proton_10GeV_Col/result_proton_{t}.root") #for alma workstation
     # file= ROOT.TFile.Open(f"/mnt/c/Users/hnayak/Documents/Proton_100Gev_Col/result_proton_{t}.root")
     tree = file.Get("outputTree")
     total_entries = tree.GetEntries()
@@ -99,7 +101,8 @@ def process_events_in_range(index):
         df_event = process_event(event)
         df_events.append(df_event)
 
-    with open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/{x}_{y}_{z}/proton{t}.pkl", "wb") as f:
+    #with open(f"/mnt/c/Users/hnayak/Documents/10GeV/Proton/{x}_{y}_{z}/proton{t}.pkl", "wb") as f: #for anydesk workstation
+    with open(f"/deepsetsDatasets/dataset/10GeV/Proton/{x}_{y}_{z}/proton{t}.pkl", "wb") as f: #for alma workstation
         pickle.dump(df_events, f)
 
     print(f"proton{t}.pkl created")

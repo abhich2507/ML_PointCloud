@@ -2,7 +2,15 @@
 
 # Define list of x y z combinations
 configs=(
-  "1 1 1"
+  "100 100 100"
+  "100 100 50"
+  "50 50 200"
+  "50 50 100"
+  "50 50 50"
+  "50 50 25"
+  "25 25 200"
+  "25 25 100"
+  "25 25 50"
 )
 
 # Loop through each config
@@ -25,5 +33,5 @@ for config in "${configs[@]}"; do
 
   # Sleep for 2 hours (7200 seconds) before the next config
   echo "Sleeping for 45 minutes before next iteration..."
-  sleep 1500
+  sleep 1000
 done
