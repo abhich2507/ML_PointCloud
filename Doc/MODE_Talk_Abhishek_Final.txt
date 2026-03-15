@@ -1,0 +1,197 @@
+Particle Identification in Highly Granular 
+Calorimeters With Deep Sets
+Fifth MODE Workshop on Differential Programming for Experiment 
+Design
+OAC conference center, Kolymbari, Crete, Greece
+ Abhishek
+National Institute of Science Education and Research,
+Jatni , India
+What is a calorimeter ?
+▪Calorimeters  are used  to measure  the energy  
+of particles  : 
+▪1- Neutral  particles  
+▪2- High  energy  charged  particles  
+▪Primary  tool for jet energy  measurement
+▪ Used to measure  the energy  of particle,  
+crucial  for reconstructing  the total  jet energy  
+(EJET=EECAL+EHCAL).
+▪“Typical”  jet: 
+~62% charged  particles  (mainly  hadrons)  
+~27% photons  
+~10% neutral  hadrons
+~1% neutrinos     (Source)
+2Why do we need  high granularity calorimeter ?
+▪FCC  will study  physics  at energy  scale  of “tens of TeV” .
+▪Jets will be highly  boosted  at such  energy  scale . 
+▪High  jet energy  resolution  is essential, also for Higgs  factories  >90% of events  
+have  >2 jets. So having  excellent  JER will help  study  particles  and their  
+interactions  
+▪High  granularity  improves  pile-up robustness
+▪Role  evolved  after  following  developments :
+▪Particle  Flow  Algorithm : Reconstructs  individual  particle  using  the most  precise  
+subdetector .
+▪Boosted  Jet Tagging : It requires  fine substructure  resolution  in jets.
+▪Time  resolution?
+1. https://flc.desy.de/hcal/basics/particle_flow/index_eng.html ; 2. https://cds.cern.ch/record/2707741/files/ATL -LARG -PROC -2020 -001.pdf ; 
+3.https://indico.cern.ch/event/1273702/contributions/5349385/attachments/2637632/4563621/Corfu -calo_v3.pdf 3Objective 
+▪To understand the maximum extractable information from a calorimeter . 
+▪A few assumptions are made for this study: 
+▪Perfect time resolution inside the calorimeter.
+▪Perfect spatial resolution.
+▪Arbitrary high granularity.
+▪GEANT4 is used for simulating the homogeneous calorimeter:
+▪State of art scintillating material : Lead Tungstate (PbWO4) . 
+▪Segmentation: 100 x 100 x 200 cells
+▪Cell size: 3 x 3 x 6 mm3
+▪Granularity varied to study the effect of loss of information.
+▪i.e. Z -axis: 100 x 100 x 200           100 x 100 x 100           100 x 100 x 50 
+1. https://www.epic -crystal.com/scintillation -crystals/pbwo4 -crystal.html ;  A 3 x 3 x 15 cm3 Lead Tungstate 
+crystal and it costs 220 USD. 
+4Data Generation 
+▪GEANT4 Particle Gun : Proton and Pion are generated at energies: 25 GeV, 50 GeV 
+and 100 GeV. 
+▪Hadron showers are stored in ROOT files. 
+▪Each file contains 100K events per hadron.
+▪Each shower will be represented as a Point Cloud.
+▪Both temporal and spatial features are included in the Point Cloud.
+π+ or p
+Z-Axis
+5Data Generation 
+▪Point Cloud: A point cloud is an unordered collection of data points in 3D 
+space.
+▪Hadron shower as Point Cloud:
+▪Cell Coordinates (X,Y,Z)
+▪Cell Energy Deposited
+▪Cell energy weighted time average 
+▪Point Clouds are highly efficient to represent
+     the showers in granular calorimeter.
+▪Following are few event displays for p and π+:Cell_x
+  (idx)Cell_y
+  (idx)Cell_z
+  (idx)Cell_E 
+(MeV)Cell_T 
+   (ns)
+50 49 0 6.7661 1.3549
+50 49 1 6.9507 1.3748
+. . . . .
+. . . . .
+94 87 157 0.0018 463.7056
+6High Level Features
+▪Two kinds of features were developed:
+▪Global Features : Describe overall shower characteristics independent of calorimeter  
+granularity .
+▪Example: Energy deposited in full calorimeter.
+▪Local Features: Capture shower properties using low-level information from individual cells .
+▪Example: Radius of hadronic shower.
+7High Level Features
+Global Variables
+1.Total energy deposited
+2.Calorimeter characteristic time
+3. Time of flight ( ToF)1.First nuclear interaction vertex position
+2.First interaction vertex time
+3.Speed
+4.Δt
+5.Fraction of energy after first vertex
+6.Number of non -empty cells before vertex
+7.Number of non -empty cells
+8.Maximum cell energy
+9.Second maximum cell energy
+10.Total energy near vertex
+11.Fraction of energy near vertex
+12.Max energy near vertex
+13.Energy variance near vertex
+14.Distance to max energy cell
+15.Distance between max and second -max 
+cells
+16.Energy near shower peak
+17.Fraction of energy near shower peak
+18.Left –right energy asymmetry (ELR)19. Energy ratio ( Rcell_E )
+20. Energy delta ( Δcell_E )
+21. Energy fraction (FE)
+22. Shower radius (R)
+23. Shower radius σ ( σR)
+24. Shower length (L)
+25. Shower length σ ( σL)
+26. Weighted radius ( Rw)
+27. Weighted radius σ ( σwR )
+28. Weighted shower length (Lw)
+29. Weighted shower length σ 
+(σwL )
+30. Asymmetry (A)
+31. Weighted asymmetry (Aw)Local Variables
+8High Level Features
+•First Nuclear Interaction Vertex Position:
+⮚Estimated depth (z -position) where the hadron first undergoes a nuclear interaction in the 
+calorimeter.
+•Number of Non -Empty Cells
+⮚Count of calorimeter cells with energy deposit > 0.1 MeV.
+•Total Energy Deposited
+⮚Sum of all energy deposited across calorimeter cells in an event.
+•Radius (R)
+⮚Average transverse spread of energy deposits around the shower’s center .
+9Boosted Decision Trees (BDT)
+→XGBoost  is an efficient  gradient  boosting  
+algorithm  that builds  an ensemble  of 
+decision  trees  sequentially,  where  each  new  
+tree minimizes  the errors  of previous  ones  
+using  gradient  descent  on a defined  loss 
+function .
+→It includes  regularization  to prevent  
+overfitting  and uses 3-fold cross -validation  to 
+optimize  parameters .
+→The model  uses the binary :logistic  objective  
+for binary  classification . 
+10Deep Sets Architecture
+Zaheer et al., 2017 
+https://doi.org/10.48550/arXiv.1703.06114Pooling 
+FunctionPermutation -Invariant 
+f(X)Name
+Sum Deep Sets
+Average Normalized -
+Deep Sets
+Max PointNet
+▪Deep Sets: If a function can be expressed in the following form
+▪The functions  ρ and Φ can be learned  by a neural  
+network
+▪f(X) is a permutation -invariant  function  since  the 
+sum is independent  of order  of elements  in the set 
+X.
+▪Other  similar  operations,  such  as max  and mean,  
+can also be applied .
+11
+Training Results
+▪Data contains 100K events each for p and π+.
+▪The NN is trained with 60% of events.
+▪20% is used for validation and 20% for testing.
+▪NN model is saved at checkpoint with lowest 
+validation  loss.
+▪The uncertainty in accuracy is calculated with 
+clopper -pearson  method.
+12Results
+13Conclusion and Future Work
+14▪Studied the impact of calorimeter granularity on particle identification
+▪Classification performance is directly proportional to the granularity of 
+calorimeter.
+▪Impact of granularity is significantly higher at lower energy.
+Future Work
+▪Simulate a more realistic calorimeter with spatial and temporal 
+resolution and test the impact of granularity.
+▪Explore the spatial temporal features separately.
+▪Combine the high -level features.
+▪Extend to multiple particle identification. Thank you for your attention!BACK
+ -
+UP
+BACK
+ -
+UP
+BACK
+ -
+UP
+▪Reconstructs each particle using the most 
+precise subdetector:
+▪Tracking → charged particles
+▪ECAL → photons
+▪HCAL → neutral hadrons 
+BACK
+ -
+UP

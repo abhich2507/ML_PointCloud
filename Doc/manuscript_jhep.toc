@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {section}{\numberline {2}Dataset and point-cloud representation}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}From voxels to point clouds}{2}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Permutation-invariant Model Architecture}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Model implementation}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Training details}{3}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Experimental setup}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Metrics}{3}{subsection.4.1}%
+\contentsline {section}{\numberline {5}Results and Performance Granularity Sweep}{3}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Impact of Arbitrary High Granularity}{3}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Feature Ablation: Replacing Hand-Crafted Metrics}{4}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Discussion}{4}{section.6}%
+\contentsline {section}{\numberline {7}Conclusions}{4}{section.7}%
+\contentsline {section}{\numberline {A}Reproducibility details}{5}{appendix.A}%
